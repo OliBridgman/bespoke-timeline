@@ -29,11 +29,17 @@ module.exports = function(options) {
 
     var timelineContainer = document.createElement('div');
     timelineContainer.className = 'timeline-container';
-    deck.slides.forEach(function(slide){
+    deck.slides.forEach(function(slide, index){
       var timelinePiece = document.createElement('div');
       timelinePiece.className = 'year';
-      timelinePiece.innerText = slide.getElementsByTagName('h1')[0].innerText;
+      var link = document.createElement('a');
+      console.dir(slide);
+      var href = slide.dataset.bespokeHash ? slide.dataset.bespokeHash : index;
+      link.href = '#' + href;
+      link.className = 'timeline-link';
+      link.innerText = slide.getElementsByTagName('h1')[0].innerText;
       timelinePiece.style.left = getSlideOffset(slide) + '%';
+      timelinePiece.appendChild(link);
       timelineContainer.appendChild(timelinePiece);
     });
     deck.parent.appendChild(timelineContainer);
